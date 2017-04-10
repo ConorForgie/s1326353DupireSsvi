@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dupire", "Dupire\Dupire.csproj", "{AADAE7F9-5C07-4C95-BEB0-E686B762A109}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{1167F8E7-23AE-46B4-AF78-6921243CAA2B}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DupireCmdLine", "DupireCmdLine\DupireCmdLine.csproj", "{6B1B21E9-DAE6-47C4-94F9-723DDD23E9D1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{13D4EE49-7122-4A45-B4A4-FCF70AF15A3B} = {13D4EE49-7122-4A45-B4A4-FCF70AF15A3B}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlglibCSharpLib", "AlglibCSharpLib\AlglibCSharpLib.csproj", "{13D4EE49-7122-4A45-B4A4-FCF70AF15A3B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DupireXL", "DupireXL\DupireXL.csproj", "{22825186-E7C2-4493-BEC1-97A103C77A88}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AADAE7F9-5C07-4C95-BEB0-E686B762A109}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AADAE7F9-5C07-4C95-BEB0-E686B762A109}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AADAE7F9-5C07-4C95-BEB0-E686B762A109}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AADAE7F9-5C07-4C95-BEB0-E686B762A109}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B1B21E9-DAE6-47C4-94F9-723DDD23E9D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B1B21E9-DAE6-47C4-94F9-723DDD23E9D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B1B21E9-DAE6-47C4-94F9-723DDD23E9D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B1B21E9-DAE6-47C4-94F9-723DDD23E9D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13D4EE49-7122-4A45-B4A4-FCF70AF15A3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13D4EE49-7122-4A45-B4A4-FCF70AF15A3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13D4EE49-7122-4A45-B4A4-FCF70AF15A3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13D4EE49-7122-4A45-B4A4-FCF70AF15A3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22825186-E7C2-4493-BEC1-97A103C77A88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22825186-E7C2-4493-BEC1-97A103C77A88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22825186-E7C2-4493-BEC1-97A103C77A88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22825186-E7C2-4493-BEC1-97A103C77A88}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
