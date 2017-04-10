@@ -13,7 +13,7 @@ namespace Dupire
         public static double[,] GenerateMcPaths(int N, int M, double T, double r, double S0, double[] ssviParams)
         {
             Ssvi ssvi = new Ssvi(ssviParams);
-
+            // N = number of samples, M = number of time steps
             double[,] pathOfS = new double[N, M];
             double[] Z = new double[N];
             double tau = T / M;
