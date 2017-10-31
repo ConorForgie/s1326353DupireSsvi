@@ -35,11 +35,11 @@ namespace Dupire
 
         private double CalculateEurOptionPrice(double S0, double T, Func<double, double> payoffFn)
         {
-            double[,] stockPaths = MonteCarloPaths.GenerateMcPaths(N, M, T, r, S0, ssviParams);
+            double[][] stockPaths = MonteCarloPaths.ParallelGenerateMcPaths(N, M, T, r, S0, ssviParams);
             double Price = 0;
             for (int n = 0; n < N; ++n)
             {
-                Price += payoffFn(stockPaths[n, M - 1]);
+                Price += payoffFn(stockPaths[n][M - 1]);
             }
 
             return Math.Exp(-r * T)*(Price / N);
@@ -60,7 +60,7 @@ namespace Dupire
         private double CalculateAsianOptionPrice(double S0, double[] T, double maturity, Func<double, double> payoffFn)
         {
             int nMonitorTimes = T.Length;
-            double[,] stockPaths = MonteCarloPaths.GenerateMcPaths(N, M, maturity, r, S0, ssviParams); // size N x nMonitorTimes
+            double[][] stockPaths = MonteCarloPaths.ParallelGenerateMcPaths(N, M, maturity, r, S0, ssviParams); // size N x nMonitorTimes
 
 
             // the is the average for Asian option price
@@ -74,7 +74,7 @@ namespace Dupire
                 for (int i = 0; i < nMonitorTimes; ++i)
                 {
                     int index = (int)Math.Round((T[i] / maturity) * (M - 1));
-                    averageAlongPath += stockPaths[n, index]; 
+                    averageAlongPath += stockPaths[n][index]; 
                 }
                 averageAlongPath *= 1.0 / nMonitorTimes;
                 averagePayoff += payoffFn(averageAlongPath);
@@ -85,7 +85,7 @@ namespace Dupire
 
         public double CalculateLookbackOptionPrice(double S0, double maturity)
         {
-            double[,] stockPaths = MonteCarloPaths.GenerateMcPaths(N, M, maturity, r, S0, ssviParams);
+            double[][] stockPaths = MonteCarloPaths.ParallelGenerateMcPaths(N, M, maturity, r, S0, ssviParams);
 
             double payoff = 0;
 
@@ -94,10 +94,10 @@ namespace Dupire
                 double minValue = double.MaxValue;
                 for(int m =0; m<M; ++m)
                 {
-                    if (stockPaths[n, m] < minValue)
-                        minValue = stockPaths[n, m];
+                    if (stockPaths[n][m] < minValue)
+                        minValue = stockPaths[n][m];
                 }
-                payoff += stockPaths[n, M - 1] - minValue;                
+                payoff += stockPaths[n][M - 1] - minValue;                
             }            
             return Math.Exp(-r*maturity)*payoff/N;
         }
@@ -117,7 +117,7 @@ namespace Dupire
 
         private double CalculateBarrierOptionPrice(double S0, double maturity, string DownOrUp, string InOrOut, double barrier, Func<double,double> payoffFn)
         {
-            double[,] stockPaths = MonteCarloPaths.GenerateMcPaths(N, M, maturity, r, S0, ssviParams);
+            double[][] stockPaths = MonteCarloPaths.ParallelGenerateMcPaths(N, M, maturity, r, S0, ssviParams);
             double payoff = 0;
 
             for (int n = 0; n < N; ++n)
@@ -127,12 +127,12 @@ namespace Dupire
                 {
                     if (DownOrUp == "D")
                     {
-                        if (stockPaths[n, m] <= barrier)
+                        if (stockPaths[n][m] <= barrier)
                             barrierAchieved = true;
                     }
                     else if (DownOrUp == "U")
                     {
-                        if (stockPaths[n, m] >= barrier)
+                        if (stockPaths[n][m] >= barrier)
                             barrierAchieved = true;
                     }
                     else
@@ -141,14 +141,14 @@ namespace Dupire
                 if (barrierAchieved)
                 {
                     if (InOrOut == "I")
-                        payoff += payoffFn(stockPaths[n, M - 1]);
+                        payoff += payoffFn(stockPaths[n][M - 1]);
                     else if (InOrOut != "O")
                         throw new ArgumentException("InOrOut must be I or O.");
                 }
                 else
                 {
                     if(InOrOut == "O")
-                        payoff += payoffFn(stockPaths[n, M - 1]);
+                        payoff += payoffFn(stockPaths[n][M - 1]);
                     else if (InOrOut != "I")
                         throw new ArgumentException("InOrOut must be I or O.");
                 }

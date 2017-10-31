@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using MathNet.Numerics; 
-
+using MathNet.Numerics;
+using System.Diagnostics;
 
 namespace Dupire
 {
@@ -21,19 +21,30 @@ namespace Dupire
             double r = 0.025;
             double S0 = 100;
             double T = 1;
-            int N = 10000;
+            int N = 100000;
             int M = 128;
+            Stopwatch timer = Stopwatch.StartNew();
             double[,] paths = MonteCarloPaths.GenerateMcPaths(N, M, T, r, S0, ssviParams);
+            timer.Stop();
+            TimeSpan serial_length = timer.Elapsed;
+            Console.WriteLine("Serial elapsed time = " + serial_length.ToString("mm\\:ss\\.ff"));
 
-            using (System.IO.StreamWriter file = new System.IO.StreamWriter("Paths.csv"))
-            {
-                for (int i = 0; i < paths.GetLength(0); ++i)
-                {
-                    for (int j = 0; j < paths.GetLength(1); ++j)
-                        file.Write(paths[i, j].ToString() + ",");
-                    file.Write(Environment.NewLine);
-                }
-            }
+            Stopwatch timer1 = Stopwatch.StartNew();
+            double[][] paths1 = MonteCarloPaths.ParallelGenerateMcPaths(N, M, T, r, S0, ssviParams);
+            timer1.Stop();
+            TimeSpan serial_length1 = timer1.Elapsed;
+            Console.WriteLine("Parallel elapsed time = " + serial_length1.ToString("mm\\:ss\\.ff"));
+
+
+            //using (System.IO.StreamWriter file = new System.IO.StreamWriter("Paths.csv"))
+            //{
+            //    for (int i = 0; i < paths.GetLength(0); ++i)
+            //    {
+            //        for (int j = 0; j < paths.GetLength(1); ++j)
+            //            file.Write(paths[i, j].ToString() + ",");
+            //        file.Write(Environment.NewLine);
+            //    }
+            //}
             Console.WriteLine ("All done.");
             Console.ReadKey();
 		}
